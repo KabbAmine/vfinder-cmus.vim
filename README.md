@@ -5,11 +5,11 @@
 
 A [cmus](https://cmus.github.io/) source for [vfinder.vim](https://github.com/kabbamine/vfinder.vim).
 
-![Demo of vfinder-cmus](.img/vfinder_demo.gif "Old demo of vFinder")
+![Demo of vfinder-cmus](.img/vfinder-cmus.gif "Demo of vfinder-cmus")
 
 # Installation
 
-e.g. with [vim-plug](https://github.com/junegunn/vim-plug)
+This plugin needs [vfinder.vim](https://github.com/kabbamine/vfinder.vim) to be installed, e.g. with [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
 Plug 'kabbamine/vfinder.vim'
@@ -24,12 +24,12 @@ call vfinder#i('cmus')
 
 ## Mappings
 
-|  modes  | action         | default value |
-| :-----: | -------------- | :-----------: |
-| `i`/`n` | `play`         | `<CR>`/`<CR>` |
-| `i`/`n` | `queue`        |  `<C-s>`/`s`  |
-| `i`/`n` | `pre_queue`    |  `<C-v>`/`v`  |
-| `i`/`n` | `show_current` |  `<C-o>`/`o`  |
+|  modes  | action         | description                             | default value |
+| :-----: | -------------- | --------------------------------------- | :-----------: |
+| `i`/`n` | `play`         | Play selected file                      | `<CR>`/`<CR>` |
+| `i`/`n` | `queue`        | Add selected file to the queue list     |  `<C-s>`/`s`  |
+| `i`/`n` | `pre_queue`    | Prepend selected file to the queue list |  `<C-v>`/`v`  |
+| `i`/`n` | `show_current` | Show the current played song in cmus    |  `<C-o>`/`o`  |
 
 # License
 
