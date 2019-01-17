@@ -1,6 +1,6 @@
 # vfinder-cmus
 
-![Badge version](https://img.shields.io/badge/version-0.0.1-blue.svg?style=flat-square "Badge for version")
+![Badge version](https://img.shields.io/badge/version-0.1.0-blue.svg?style=flat-square "Badge for version")
 ![License version](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square "Badge for license")
 
 A [cmus](https://cmus.github.io/) source for [vfinder.vim](https://github.com/kabbamine/vfinder.vim).
