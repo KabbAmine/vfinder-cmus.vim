@@ -13,6 +13,7 @@ fun! vfinder#sources#cmus#get(...) abort " {{{1
                 \   'to_execute'   : function('s:cmus_source'),
                 \   'candidate_fun': function('s:cmus_candidate_fun'),
                 \   'format_fun'   : function('s:cmus_format_fun'),
+                \   'syntax_fun'   : function('s:cmus_syntax_fun'),
                 \   'maps'         : s:cmus_maps()
                 \ }
 endfun
@@ -59,6 +60,13 @@ endfun
 
 fun! s:cmus_candidate_fun() abort " {{{1
     return fnamemodify(matchstr(getline('.'), '"\zs.*\ze"$'), ':p')
+endfun
+" 1}}}
+
+fun! s:cmus_syntax_fun() abort " {{{1
+    " to overwrite the vfinderIndex highlighting
+    syntax match vfinderCmus =\%>1l^.*$=
+    highlight! link vfinderCmus Normal
 endfun
 " 1}}}
 
