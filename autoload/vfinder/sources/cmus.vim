@@ -88,8 +88,8 @@ fun! s:cmus_maps() abort " {{{1
     let maps.n = {
                 \   keys.n.play        : actions.play,
                 \   keys.n.queue       : actions.queue,
-                \   keys.i.pre_queue   : actions.pre_queue,
-                \   keys.i.show_current: actions.show_current
+                \   keys.n.pre_queue   : actions.pre_queue,
+                \   keys.n.show_current: actions.show_current
                 \ }
     return maps
 endfun
@@ -107,11 +107,13 @@ endfun
 
 fun! s:queue(file) abort " {{{1
     call s:cmus_remote('add -q', a:file)
+    call s:cmus_echo('add to queue list', a:file)
 endfun
 " 1}}}
 
 fun! s:pre_queue(file) abort " {{{1
     call s:cmus_remote('add -Q', a:file)
+    call s:cmus_echo('prepend to queue list', a:file)
 endfun
 " 1}}}
 
@@ -126,7 +128,11 @@ fun! s:show_current(...) abort " {{{1
                 \   !empty(date) ? ' (' . date . ')' : '',
                 \ )
 
-    call s:cmus_echon('playing', artist, title, album_infos_str)
+    call s:cmus_echo('playing', {
+                \   'artist'     : artist,
+                \   'title'      : title,
+                \   'album_infos': album_infos_str
+                \ })
 endfun
 " 1}}}
 
@@ -162,15 +168,22 @@ fun! s:cmus_modes_str() abort " {{{1
 endfun
 " 1}}}
 
-fun! s:cmus_echon(state, artist, title, album_infos) abort " {{{1
+fun! s:cmus_echo(state, song) abort " {{{1
     echohl vfinderIndex
     unsilent echon a:state . '> '
-    echohl vfinderName
-    unsilent echon a:artist
-    echohl None
-    unsilent echon ' ' . a:title
-    echohl vfinderSymbols
-    unsilent echon ' ' . a:album_infos
+
+    if type(a:song) is# v:t_dict
+        echohl vfinderName
+        unsilent echon a:song.artist
+        echohl None
+        unsilent echon ' ' . a:song.title
+        echohl vfinderSymbols
+        unsilent echon ' ' . a:song.album_infos
+    else
+        echohl vfinderName
+        unsilent echon fnamemodify(a:song, ':t:r')
+    endif
+
     echohl None
 endfun
 " 1}}}
