@@ -20,17 +20,22 @@ endfun
 
 fun! s:cmus_source() abort " {{{1
     let res = []
-    for f in split(join(systemlist('cmus-remote -C "save -l -e -"')), 'file ')
-        let l = split(f, 'tag ')
-        call add(res, {
-                    \   'file'  : fnamemodify(matchstr(l[0], '.*\ze duration \d\+'), ':p'),
-                    \   'artist': l[1][7:],
-                    \   'album' : l[2][6:],
-                    \   'title' : l[3][6:],
-                    \   'date'  : matchstr(l[4], '\d\+'),
-                    \   'track' : matchstr(l[6], '\d\+')
-                    \ })
-    endfor
+    if !vfinder#cache#exists('cmus') || b:vf.bopts.manual_update
+        for f in split(join(systemlist('cmus-remote -C "save -l -e -"')), 'file ')
+            let l = split(f, 'tag ')
+            call add(res, json_encode({
+                        \   'file'  : fnamemodify(matchstr(l[0], '.*\ze duration \d\+'), ':p'),
+                        \   'artist': l[1][7:],
+                        \   'album' : l[2][6:],
+                        \   'title' : l[3][6:],
+                        \   'date'  : matchstr(l[4], '\d\+'),
+                        \   'track' : matchstr(l[6], '\d\+')
+                        \ }))
+        endfor
+        call vfinder#cache#write('cmus', res, 0)
+    else
+        let res = vfinder#cache#read('cmus')
+    endif
 
     let b:vf.flags.modes = s:cmus_modes_str()
     return res
@@ -38,13 +43,17 @@ endfun
 " 1}}}
 
 fun! s:cmus_format_fun(songs_list) abort " {{{1
-    return map(deepcopy(a:songs_list), {_, v ->
-                \   printf('%-30S %-60S %-50S "%s"',
-                \       v.artist,
-                \       v.title,
-                \       (v.track ? v.track . '. ' : '') . v.album . '(' . v.date . ')',
-                \       fnamemodify(v.file, ':~'))
-                \ })
+    let res = []
+    for s in a:songs_list
+        let s_dict = json_decode(s)
+        call add(res, printf('%-30S %-60S %-50S "%s"',
+                \   s_dict.artist,
+                \   s_dict.title,
+                \   (s_dict.track ? s_dict.track . '. ' : '') . s_dict.album . '(' . s_dict.date . ')',
+                \   fnamemodify(s_dict.file, ':~')
+                \ ))
+    endfor
+    return res
 endfun
 " 1}}}
 
