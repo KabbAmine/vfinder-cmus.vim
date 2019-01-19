@@ -64,9 +64,12 @@ endfun
 " 1}}}
 
 fun! s:cmus_syntax_fun() abort " {{{1
-    " to overwrite the vfinderIndex highlighting
-    syntax match vfinderCmus =\%>1l^.*$=
-    highlight! link vfinderCmus Normal
+    syntax match vfinderCmusArtist =\%>1l^.\{-} \ze\d\{2}. =
+    syntax match vfinderCmusAlbumInfos =\%>1l \[.\{-} (\d*)]=
+    syntax match vfinderCmusFilepath =\%>1l".*"$=
+    highlight! link vfinderCmusArtist vfinderName
+    highlight! link vfinderCmusAlbumInfos vfinderSymbols
+    highlight! link vfinderCmusFilepath vfinderIndex
 endfun
 " 1}}}
 
