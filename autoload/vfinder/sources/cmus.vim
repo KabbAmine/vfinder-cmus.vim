@@ -1,5 +1,5 @@
 " Creation         : 2019-01-17
-" Last modification: 2019-01-17
+" Last modification: 2019-01-19
 
 
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -46,11 +46,11 @@ fun! s:cmus_format_fun(songs_list) abort " {{{1
     let res = []
     for s in a:songs_list
         let s_dict = json_decode(s)
-        call add(res, printf('%-30S %-60S %02d %-45S "%s"',
+        call add(res, printf('%-25S %02d. %-40S %-50S "%-25s"',
                 \   s_dict.artist,
-                \   s_dict.title,
                 \   s_dict.track,
-                \   s_dict.album . '(' . s_dict.date . ')',
+                \   s_dict.title,
+                \   '[' . s_dict.album . ' (' . s_dict.date . ')]',
                 \   fnamemodify(s_dict.file, ':~')
                 \ ))
     endfor
