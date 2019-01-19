@@ -37,6 +37,7 @@ fun! s:cmus_source() abort " {{{1
         let res = vfinder#cache#read('cmus')
     endif
 
+    let b:vf.bopts.update_on_win_enter = 0
     let b:vf.flags.modes = s:cmus_modes_str()
     return res
 endfun
