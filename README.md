@@ -5,7 +5,7 @@
 
 A [cmus](https://cmus.github.io/) source for [vfinder.vim](https://github.com/kabbamine/vfinder.vim).
 
-![Demo of vfinder-cmus](.img/vfinder-cmus.gif "Demo of vfinder-cmus")
+![Demo of vfinder-cmus](.img/vfinder-cmus_demo.gif "Demo of vfinder-cmus")
 
 # Installation
 
@@ -22,7 +22,7 @@ Plug 'kabbamine/vfinder-cmus.vim'
 call vfinder#i('cmus')
 ```
 
-## Mappings
+# Actions & mappings
 
 |  modes  | action         | description                             | default value |
 | :-----: | -------------- | --------------------------------------- | :-----------: |
